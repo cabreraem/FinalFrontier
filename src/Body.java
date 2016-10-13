@@ -5,6 +5,8 @@ public class Body {
 
     private final static double G = 6.67e11;
 
+    private Body orbit;
+
     private double mass;
     private double radius;
     private double posX;
@@ -13,14 +15,42 @@ public class Body {
     private double velocityY;
     private double accelX;
     private double accelY;
+    private double period;
+    private double axis;
 
-    public Body(double m, double r, double x, double y, double vX, double vY) {
+    //Constructors
+    public Body(double m, double r, double x, double y, double vX, double vY, double p, double a) {
         mass = m;
         radius = r;
         posX = x;
         posY = y;
         velocityX = vX;
         velocityY = vY;
+        period = p;
+        axis = a;
+    }
+
+    public Body(double m, double r, double x, double y, double vX, double vY, Body o, double a) {
+        mass = m;
+        radius = r;
+        posX = x;
+        posY = y;
+        velocityX = vX;
+        velocityY = vY;
+        orbit = o;
+        axis = a;
+        period = 2 * Math.PI * Math.sqrt(Math.pow(a,3)/(G*o.getMass()));
+
+    }
+
+    public Body(double m, double r, double vx, double vy, double a, Body o){
+        mass = m;
+        radius = r;
+        posY = o.getPosY();
+        posX = o.getPosX() + a;
+        velocityX = vx;
+        velocityY = vy;
+
     }
 
     //Getters
