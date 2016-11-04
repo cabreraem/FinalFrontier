@@ -1,5 +1,8 @@
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -39,12 +42,25 @@ public class Simulator {
 
     public static void main (String[] args)throws IOException {
 
+        ArrayList<Body> planets = new ArrayList<>();
+
         String fileName = "planets.txt";
 
         String[] lines = readFile(fileName);
 
+        String line;
+
+        List<String> bodyParts;
+
+
+
         for(int i=0; i<lines.length; i++){
-            
+            line = lines[i];
+
+            bodyParts = Arrays.asList(line.split(","));
+            int j = bodyParts.size();
+
+
         }
 
     }
