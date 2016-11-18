@@ -19,6 +19,16 @@ public class Body {
     private double axis;
 
     //Constructors
+    public Body(double m, double r, double a, double v){
+        mass = m;
+        radius = r;
+        axis = a;
+        velocityX = 0;
+        velocityY = v;
+
+
+    }
+
     public Body(double m, double r, double x, double y, double vX, double vY, double p, double a) {
         mass = m;
         radius = r;
