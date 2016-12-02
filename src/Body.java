@@ -88,6 +88,10 @@ public class Body {
         return velocityY;
     }
 
+    public double getAxis() {
+        return axis;
+    }
+
     //Methods
     public double getGravity(double d){
 

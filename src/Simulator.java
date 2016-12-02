@@ -1,6 +1,8 @@
+import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 
 import java.io.FileReader;
@@ -11,13 +13,15 @@ import java.util.List;
 import java.util.Scanner;
 
 import static javafx.application.Application.launch;
+import static javax.print.attribute.standard.Chromaticity.COLOR;
 
 /**
  * Created by emiliacabrera on 9/27/16.
  */
-public class Simulator {
+public class Simulator extends Application {
 
-    public Universe world;
+    private static Universe world;
+    private Stage primaryStage;
 
     public static int getFileSize(String fileName)throws IOException{
         Scanner input = new Scanner(new FileReader(fileName));
@@ -50,7 +54,7 @@ public class Simulator {
 
 
     //initializes universe if given bodies with only 4 variables (mass, axis, velocity, radius)
-    public static createWorld(String fileName)throws IOException{
+    public static void createWorld(String fileName)throws IOException{
         ArrayList<Body> planets = new ArrayList<>();
 
         Body planet;
@@ -87,8 +91,6 @@ public class Simulator {
 
         String fileName = "planets.txt";
 
-
-
         createWorld(fileName);
 
         launch(args);
@@ -96,14 +98,47 @@ public class Simulator {
     }
 
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) throws Exception{
+        this.primaryStage = primaryStage;
+        this.primaryStage.setTitle("The Final Frontier");
+
+
         Group root = new Group();
         Scene scene = new Scene(root, 800, 600, Color.BLACK);
         primaryStage.setScene(scene);
 
-        for(int i =0; i< world.getBodies().size(); i++){
+        Group circles = new Group();
 
+        Circle circle= new Circle();
+
+        double radius = world.getBodies().get(0).getRadius()/1000;
+        double sunDist = radius + 400;
+        circle.setCenterX(400);
+        circle.setCenterY(300);
+        circle.setRadius(radius);
+        circle.setFill(Color.YELLOW);
+        circles.getChildren().add(circle);
+
+        Double distance;
+
+        for(int i =1; i< world.getBodies().size(); i++){
+            Body temp = world.getBodies().get(i);
+
+            circle= new Circle();
+
+            radius = Math.log(temp.getRadius())/Math.log(2);
+
+            distance = sunDist + Math.log(temp.getAxis())/Math.log(2);
+
+            circle.setCenterX(distance);
+            circle.setCenterY(300);
+            circle.setRadius(radius);
+            circle.setFill(Color.ORANGERED);
+
+            circles.getChildren().add(circle);
         }
+
+        root.getChildren().add(circles);
         primaryStage.show();
     }
 }
