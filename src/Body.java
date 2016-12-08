@@ -17,16 +17,16 @@ public class Body {
     private double accelY;
     private double period;
     private double axis;
+    private String label;
 
     //Constructors
-    public Body(double m, double r, double a, double v){
+    public Body(String s, double m, double r, double a, double v){
         mass = m;
         radius = r;
         axis = a;
         velocityX = 0;
         velocityY = v;
-
-
+        label = s;
     }
 
     public Body(double m, double r, double x, double y, double vX, double vY, double p, double a) {
@@ -67,6 +67,8 @@ public class Body {
     public double getMass() {
         return mass;
     }
+
+    public String getName(){return label;}
 
     public double getRadius() {
         return radius;
