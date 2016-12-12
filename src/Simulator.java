@@ -1,3 +1,4 @@
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
@@ -103,7 +104,7 @@ public class Simulator extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("The Final Frontier");
 
@@ -114,11 +115,11 @@ public class Simulator extends Application {
 
         Group circles = new Group();
 
-        Circle circle= new Circle();
+        Circle circle = new Circle();
 
-        double radius = Math.log(world.getBodies().get(0).getRadius())/Math.log(2)*3;
-        double sunDist = 400 + radius + 25;
-        circle.setCenterX(400);
+        double radius = Math.log(world.getBodies().get(0).getRadius()) / Math.log(2) * 3;
+        double sunDist = 400;
+        circle.setCenterX(sunDist);
         circle.setCenterY(300);
         circle.setRadius(radius);
         circle.setFill(Color.YELLOW);
@@ -128,22 +129,16 @@ public class Simulator extends Application {
 
         double initScale = 0;
 
-        for(int i =1; i< world.getBodies().size(); i++){
+        for (int i = 1; i < world.getBodies().size(); i++) {
 
             Body temp = world.getBodies().get(i);
 
-            if(i == 1){
-                initScale = temp.getAxis();
-                distance = sunDist;
-            }
-            else{
-                distance = sunDist + Math.log(temp.getAxis()-initScale)/Math.log(2)*2;
-            }
+            circle = new Circle();
 
-            circle= new Circle();
+            distance = sunDist + Math.sqrt(temp.getAxis())/150;
+            radius = Math.sqrt(temp.getRadius())/10;
 
-            radius = Math.log(temp.getRadius())/Math.log(2);
-
+            System.out.println(radius);
             System.out.println(distance);
 
             circle.setCenterX(distance);
@@ -158,13 +153,20 @@ public class Simulator extends Application {
                 @Override
                 public void handle(MouseEvent event) {
                     Node node = (Node) event.getSource();
-                    Tooltip.install(node, tp);
-                    //tp.show(node, primaryStage.getX(), primaryStage.getY());
+                    tp.show(node, event.getX(), event.getY());
                 }
             });
         }
 
         root.getChildren().add(circles);
         primaryStage.show();
+
+        /*Timeline timeline = new Timeline();
+        timeline.
+        for(Node planet: circles.getChildren()){
+            timeline.getKeyFrames().addAll(
+                    new KeyFrame();
+            )
+        }*/
     }
 }
